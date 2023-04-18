@@ -36,4 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
+### etc
 .env
+/src/main/resources/application-prod.yml
