@@ -24,6 +24,8 @@ dependencies {
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'	// 쿼리 찍어주는 라이브러리. 시스템자원 소모하므로 운영시스템 적용 전 성능테스트 거쳐야함
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
