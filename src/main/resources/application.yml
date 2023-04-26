@@ -13,6 +13,9 @@ spring:
 #        show_sql: true
         format_sql: true
 
+  jwt:
+    secret: ${SEJONGMATE_JWT_KEY}
+
 logging:
   level:
     org.hibernate.SQL: debug
