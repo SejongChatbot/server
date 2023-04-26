@@ -25,10 +25,12 @@ public enum BaseResponseStatus {
     // users
     USERS_DUPLICATED_NUM(false, 2100, "이미 존재하는 학번입니다."),
     USERS_EMPTY_USER_ID(false, 2101, "유저 아이디 값을 확인해주세요."),
-    INVALID_USER_INFO(false, 2102, "블랙보드 아이디나 비번을 확인해주세요."),
+    INVALID_USER_INFO(false, 2102, "블랙보드 아이디나 비밀번호를 확인해주세요."),
     INVALID_USER_CRAWLING(false, 2103, "유저 정보를 불러오는데 실패했습니다"),
     POST_USERS_EMPTY_NUM(false, 2104, "학번을 입력해주세요."),
     POST_USERS_EXISTS_NUM(false,2105,"중복된 학번입니다."),
+    INVALID_USER_NUM(false, 2106, "학번을 확인해주세요"),
+    INVALID_USER_PW(false, 2106, "비밀번호를 확인해주세요."),
 
     /**
      * 3000 : Response 오류
