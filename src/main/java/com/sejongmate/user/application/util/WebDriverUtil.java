@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 import static com.sejongmate.common.BaseResponseStatus.INVALID_USER_CRAWLING;
@@ -32,8 +34,13 @@ public class WebDriverUtil {
 
 
     public void chrome(){
-        System.out.println("driverPath =" + driverPath);
+        Path currentPath = Paths.get("");
+        String path = currentPath.toAbsolutePath().toString();
+        log.info("현재 작업 경로: " + path);
+        log.info("driverPath  =" + driverPath);
+
         System.setProperty("webdriver.chrome.driver", driverPath);
+
 
         ChromeOptions options = new ChromeOptions();
         options.setHeadless(true);
