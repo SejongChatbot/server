@@ -26,7 +26,7 @@ public class WebDriverUtil {
         this.num = num;
         this.password = password;
 
-        System.setProperty("webdriver.chrome.driver", "chromedriver");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
         options.setHeadless(true);
