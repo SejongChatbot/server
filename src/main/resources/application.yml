@@ -16,6 +16,10 @@ spring:
   jwt:
     secret: ${SEJONGMATE_JWT_KEY}
 
+
+  driver:
+    path: chromedriver
+
 logging:
   level:
     org.hibernate.SQL: debug

@@ -29,6 +29,7 @@ import static com.sejongmate.common.BaseResponseStatus.*;
 public class UserService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final WebDriverUtil webDriverUtil;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -37,8 +38,8 @@ public class UserService {
     public UserCreateResDto signUpUser(UserCreateReqDto userCreateReqDto) throws BaseException {
         validateDuplicateUser(userCreateReqDto.getNum());
 
-        WebDriverUtil webDriverUtil = new WebDriverUtil(userCreateReqDto.getNum(), userCreateReqDto.getPassword());
-        JSONObject userInfo = webDriverUtil.getUserInfoObj();
+        webDriverUtil.chrome();
+        JSONObject userInfo = webDriverUtil.getUserInfoObj(userCreateReqDto.getNum(), userCreateReqDto.getPassword());
         User user = User.builder()
                 .num(userCreateReqDto.getNum())
                 .password(passwordEncoder.encode(userCreateReqDto.getPassword()))

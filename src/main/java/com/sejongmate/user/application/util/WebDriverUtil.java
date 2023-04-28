@@ -1,6 +1,8 @@
 package com.sejongmate.user.application.util;
 
 import com.sejongmate.common.BaseException;
+import jakarta.annotation.PostConstruct;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
@@ -9,6 +11,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.json.simple.parser.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
@@ -16,17 +21,19 @@ import static com.sejongmate.common.BaseResponseStatus.INVALID_USER_CRAWLING;
 import static com.sejongmate.common.BaseResponseStatus.INVALID_USER_INFO;
 
 @Log4j2
+@Service
 public class WebDriverUtil {
     private WebDriver driver;
-    private String num;
-    private String password;
+
+    @Value("${spring.driver.path}")
+    private String driverPath;
     private static final String url = "https://portal.sejong.ac.kr/jsp/login/loginSSL.jsp?rtUrl=blackboard.sejong.ac.kr";
 
-    public WebDriverUtil(String num, String password) {
-        this.num = num;
-        this.password = password;
 
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+
+    public void chrome(){
+        System.out.println("driverPath =" + driverPath);
+        System.setProperty("webdriver.chrome.driver", driverPath);
 
         ChromeOptions options = new ChromeOptions();
         options.setHeadless(true);
@@ -37,12 +44,11 @@ public class WebDriverUtil {
         options.setCapability("ignoreProtectedModeSettings", true);
         options.addArguments("--remote-allow-origins=*");
 
-
         this.driver = new ChromeDriver(options);
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
     }
 
-    public JSONObject getUserInfoObj() throws BaseException {
+    public JSONObject getUserInfoObj(String num, String password) throws BaseException {
         try{
             driver.get(url);
             driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
