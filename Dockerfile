@@ -2,9 +2,9 @@ FROM openjdk:17.0.1-jdk-slim
 
 RUN apt-get -y update
 
-RUN apt install wget
+RUN apt -y install wget
 
-RUN apt install unzip
+RUN apt -y install unzip
 
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
