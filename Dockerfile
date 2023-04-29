@@ -2,7 +2,7 @@ FROM openjdk:17-alpine
 
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
 
-RUN apk install google-chrome-stable_current_x86_64.rpm
+RUN apk add google-chrome-stable_current_x86_64.rpm
 
 RUN wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/ curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip
 
