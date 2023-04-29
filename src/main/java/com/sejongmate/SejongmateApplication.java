@@ -14,13 +14,6 @@ import java.util.List;
 public class SejongmateApplication {
 
     public static void main(String[] args) {
-
-        File dirFile = new File("usr/bin");
-        File[] fileList = dirFile.listFiles();
-        for(File file: fileList) {
-            System.out.println(file.getName());
-        }
-
         SpringApplication.run(SejongmateApplication.class, args);
     }
 
