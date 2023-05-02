@@ -11,6 +11,7 @@ import com.sejongmate.user.presentation.dto.UserCreateResDto;
 import com.sejongmate.user.presentation.dto.UserLoginReqDto;
 import com.sejongmate.user.presentation.dto.UserLoginResDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,7 @@ import static com.sejongmate.common.BaseResponseStatus.*;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
+@Log4j2
 public class UserService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
@@ -68,9 +70,13 @@ public class UserService {
     @Transactional
     public UserLoginResDto login(UserLoginReqDto userLoginReqDto) throws BaseException {
         Optional<User> users = userRepository.findByNum(userLoginReqDto.getNum());
-        User user = users.orElseThrow(() -> new BaseException(INVALID_USER_NUM));
+        User user = users.orElseThrow(() -> {
+            log.error(INVALID_USER_PW.getMessage());
+            return  new BaseException(INVALID_USER_NUM);
+        });
 
         if(!passwordEncoder.matches(userLoginReqDto.getPassword(), user.getPassword())) {
+            log.error(INVALID_USER_PW.getMessage());
             throw new BaseException(INVALID_USER_PW);
         }
 
