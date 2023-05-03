@@ -71,7 +71,7 @@ public class UserService {
     public UserLoginResDto login(UserLoginReqDto userLoginReqDto) throws BaseException {
         Optional<User> users = userRepository.findByNum(userLoginReqDto.getNum());
         User user = users.orElseThrow(() -> {
-            log.error(INVALID_USER_PW.getMessage());
+            log.error(INVALID_USER_NUM.getMessage());
             return  new BaseException(INVALID_USER_NUM);
         });
 
