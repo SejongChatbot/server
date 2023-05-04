@@ -43,7 +43,8 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests()    // 다음 리퀘스트에 대한 사용권한 체크
-                .requestMatchers("/**").permitAll() // 허용된 주소
+//                .requestMatchers("/**").permitAll() // 모든 주소 허용
+                .requestMatchers("/api/users/login", "/api/users/signup").permitAll() // 허용된 주소
                 .anyRequest().authenticated() // Authentication 필요한 주소
 
                 .and()                  // exception handling for jwt
