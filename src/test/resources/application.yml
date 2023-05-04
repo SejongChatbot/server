@@ -14,10 +14,18 @@ spring:
 
   jwt:
     secret: test
+    token:
+      access-expiration-time: 43200000    # 12시간
+      refresh-expiration-time: 604800000   # 7일
 
 
   driver:
     path: chromedriver
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 logging:
   level:

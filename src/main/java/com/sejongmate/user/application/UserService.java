@@ -1,7 +1,8 @@
 package com.sejongmate.user.application;
 
+import com.sejongmate.authentication.domain.JwtTokenProvider;
+import com.sejongmate.authentication.presentation.dto.TokenDto;
 import com.sejongmate.common.BaseException;
-import com.sejongmate.user.application.util.JwtService;
 import com.sejongmate.user.application.util.WebDriverUtil;
 import com.sejongmate.user.domain.Role;
 import com.sejongmate.user.domain.User;
@@ -9,17 +10,19 @@ import com.sejongmate.user.domain.UserRepository;
 import com.sejongmate.user.presentation.dto.UserCreateReqDto;
 import com.sejongmate.user.presentation.dto.UserCreateResDto;
 import com.sejongmate.user.presentation.dto.UserLoginReqDto;
-import com.sejongmate.user.presentation.dto.UserLoginResDto;
+import com.sejongmate.user.presentation.dto.UserResDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static com.sejongmate.common.BaseResponseStatus.*;
@@ -30,7 +33,8 @@ import static com.sejongmate.common.BaseResponseStatus.*;
 @Log4j2
 public class UserService {
     private final UserRepository userRepository;
-    private final JwtService jwtService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationManager authenticationManager;
     private final WebDriverUtil webDriverUtil;
 
     @Autowired
@@ -68,20 +72,35 @@ public class UserService {
     }
 
     @Transactional
-    public UserLoginResDto login(UserLoginReqDto userLoginReqDto) throws BaseException {
-        Optional<User> users = userRepository.findByNum(userLoginReqDto.getNum());
-        User user = users.orElseThrow(() -> {
-            log.error(INVALID_USER_PW.getMessage());
-            return  new BaseException(INVALID_USER_NUM);
-        });
+    public TokenDto login(UserLoginReqDto userLoginReqDto) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userLoginReqDto.getNum(),
+                            userLoginReqDto.getPassword()
+                    )
+            );
 
-        if(!passwordEncoder.matches(userLoginReqDto.getPassword(), user.getPassword())) {
+            TokenDto tokenDto = new TokenDto(
+                    jwtTokenProvider.createAccessToken(authentication),
+                    jwtTokenProvider.createRefreshToken(authentication)
+            );
+
+            return tokenDto;
+
+        }catch(BadCredentialsException e){
             log.error(INVALID_USER_PW.getMessage());
             throw new BaseException(INVALID_USER_PW);
         }
+    }
 
-        String jwt = jwtService.createJwtToken(user.getNum());
+    public UserResDto getUser(String num) {
+        Optional<User> users = userRepository.findByNum(num);
+        User user = users.orElseThrow(() -> {
+            log.error(INVALID_USER_NUM.getMessage());
+            return  new BaseException(INVALID_USER_NUM);
+        });
 
-        return UserLoginResDto.from(user, jwt);
+        return UserResDto.from(user);
     }
 }

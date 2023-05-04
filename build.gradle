@@ -27,6 +27,8 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 
     // com.sun.xml.bind : jwt
     implementation 'com.sun.xml.bind:jaxb-impl:4.0.1'
