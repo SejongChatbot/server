@@ -3,9 +3,11 @@ package com.sejongmate.authentication.domain;
 import com.sejongmate.common.BaseException;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,13 +15,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static com.sejongmate.common.BaseResponseStatus.EXPIRED_JWT;
 import static com.sejongmate.common.BaseResponseStatus.INVALID_JWT;
 
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class JwtTokenProvider {
+
+    private final RedisTemplate<String, String> redisTemplate;
+
     @Value("${spring.jwt.secret}")
     private String secretKey;
 
@@ -31,6 +38,7 @@ public class JwtTokenProvider {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
 
     /**
      * Access 토큰 생성
@@ -56,12 +64,22 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + refreshExpirationTime);
 
-        return Jwts.builder()
+        String refreshToken = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expireDate)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+
+        // redis에 저장
+        redisTemplate.opsForValue().set(
+                authentication.getName(),
+                refreshToken,
+                refreshExpirationTime,
+                TimeUnit.MILLISECONDS
+        );
+
+        return refreshToken;
     }
 
     /**
@@ -91,7 +109,7 @@ public class JwtTokenProvider {
     /**
      * Access 토큰을 검증
      */
-    public boolean validateAccessToken(String token){
+    public boolean validateToken(String token){
         try{
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;

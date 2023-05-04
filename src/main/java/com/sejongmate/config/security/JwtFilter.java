@@ -22,7 +22,6 @@ import static com.sejongmate.common.BaseResponseStatus.REDIS_ERROR;
  * Request 이전에 작동
  */
 
-@RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -38,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         String token = jwtTokenProvider.resolveToken(request);
         try {
-            if (token != null && jwtTokenProvider.validateAccessToken(token)) {
+            if (token != null && jwtTokenProvider.validateToken(token)) {
                 Authentication auth = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth); // 정상 토큰이면 SecurityContext에 저장
             }
