@@ -72,7 +72,7 @@ public class UserService {
     }
 
     @Transactional
-    public TokenDto login(UserLoginReqDto userLoginReqDto) {
+    public TokenDto login(UserLoginReqDto userLoginReqDto) throws BaseException {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(

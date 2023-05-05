@@ -85,7 +85,7 @@ public class JwtTokenProvider {
     /**
      * 토큰으로부터 클레임을 만들고, 이를 통해 User 객체 생성해 Authentication 객체 반환
      */
-    public Authentication getAuthentication(String token) {
+    public Authentication getAuthentication(String token) throws BaseException {
         String userPrincipal = Jwts.parser().
                 setSigningKey(secretKey)
                 .parseClaimsJws(token)
