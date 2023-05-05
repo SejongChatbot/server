@@ -58,14 +58,14 @@ public class WebDriverUtil {
     public JSONObject getUserInfoObj(String num, String password) throws BaseException {
         try{
             driver.get(url);
-            driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+            driver.manage().timeouts().implicitlyWait(1000, TimeUnit.MILLISECONDS);
 
             driver.findElement(By.id("id")).click();
             driver.findElement(By.id("id")).sendKeys(num);
             driver.findElement(By.id("password")).sendKeys(password);
             driver.findElement(By.xpath("//*[@id=\"loginBtn\"]")).click();
 
-            driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+            driver.manage().timeouts().implicitlyWait(800, TimeUnit.MILLISECONDS);
             String userId = driver.findElement(By.id("sidebar-user-name"))
                     .getAttribute("class").split(" ")[2].split("user")[1];
 
