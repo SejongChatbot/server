@@ -31,7 +31,7 @@ jobs:
 
     - name: make snippet folder
       run: |
-        cd ./build/generated-snippets
+        mkdir ./build/generated-snippets
         
     - name: make application-prod.yml
       run: |
