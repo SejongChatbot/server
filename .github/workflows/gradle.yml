@@ -29,6 +29,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: make snippet folder
+      run: |
+        cd ./build/generated-snippets
         
     - name: make application-prod.yml
       run: |
