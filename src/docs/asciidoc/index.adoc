@@ -1,0 +1,26 @@
+= Sejongmate API 문서
+https://github.com/SejongChatbot/server
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
+:toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
+:toclevels: 2
+:sectlinks:
+
+[[User-API]]
+== User API
+
+
+[[User-회원가입]]
+=== User 회원가입
+operation::user-signup[snippets='http-request,http-response,response-fields']
+
+
+[[User-로그인]]
+=== User 로그인
+operation::user-login[snippets='http-request,http-response,response-fields']
+
+
+[[User-단일-조회]]
+=== User 단일 조회
+operation::user-get[snippets='http-request,path-parameters,http-response,response-fields']
