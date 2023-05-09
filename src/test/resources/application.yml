@@ -18,6 +18,9 @@ spring:
       access-expiration-time: 43200000    # 12시간
       refresh-expiration-time: 604800000   # 7일
 
+  test:
+    pw: ${USER_PW}
+
 
   driver:
     path: chromedriver
