@@ -3,6 +3,7 @@ package com.sejongmate.chat.domain;
 import com.sejongmate.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,10 +13,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatMessage {
-    public enum MessageType{
-        MESSAGE, IMAGE
-    }
-
     @Id
     @Column(name = "message_id")
     private Long id;
@@ -34,4 +31,14 @@ public class ChatMessage {
     private Boolean isNotice;
     private String fileUrl;
 
+    @Builder
+    public ChatMessage(MessageType type, ChatRoom room, User sender, String content, LocalDateTime createdAt, Boolean isNotice, String fileUrl) {
+        this.type = type;
+        this.room = room;
+        this.sender = sender;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.isNotice = isNotice;
+        this.fileUrl = fileUrl;
+    }
 }
