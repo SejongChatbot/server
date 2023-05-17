@@ -1,17 +1,21 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${SEJONGMATE_RDS_URL}:3306/sejongmatedb?serverTimezone=Asia/Seoul
-    username: ${SEJONGMATE_RDS_USER}
-    password: ${SEJONGMATE_RDS_PW}
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: Sejongmate!
+#    url: jdbc:mysql://${SEJONGMATE_RDS_URL}:3306/sejongmatedb?serverTimezone=Asia/Seoul
+#    username: ${SEJONGMATE_RDS_USER}
+#    password: ${SEJONGMATE_RDS_PW}
 
   jpa:
     hibernate:
-      ddl-auto: create # 실행 시점에 모든 테이블 다 지우고 다시 생성
+      ddl-auto: update 
     properties:
       hibernate:
 #        show_sql: true
         format_sql: true
+    generate-ddl: true
 
   jwt:
     secret: ${SEJONGMATE_JWT_KEY}
