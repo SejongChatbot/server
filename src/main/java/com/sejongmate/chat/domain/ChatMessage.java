@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class ChatMessage {
     @Id
     @Column(name = "message_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
     private MessageType type;

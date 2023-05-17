@@ -1,20 +1,25 @@
 package com.sejongmate.chat.application;
 
-import com.sejongmate.chat.domain.ChatMessage;
-import com.sejongmate.chat.domain.ChatMessageRepository;
-import com.sejongmate.chat.domain.ChatRoom;
-import com.sejongmate.chat.domain.ChatRoomRepository;
+import com.sejongmate.chat.domain.*;
 import com.sejongmate.chat.presentation.dto.ChatMessageReqDto;
 import com.sejongmate.chat.presentation.dto.ChatMessageResDto;
+import com.sejongmate.chat.presentation.dto.ChatRoomReqDto;
+import com.sejongmate.chat.presentation.dto.ChatRoomResDto;
 import com.sejongmate.common.BaseException;
 import com.sejongmate.user.domain.User;
 import com.sejongmate.user.domain.UserRepository;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import static com.sejongmate.common.BaseResponseStatus.INVALID_CHATROOM;
 import static com.sejongmate.common.BaseResponseStatus.INVALID_USER_NUM;
@@ -28,6 +33,7 @@ public class ChatService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final UserRepository userRepository;
+
     @Transactional
     public ChatMessageResDto sendMessage(ChatMessageReqDto chatMessageReqDto) throws BaseException {
 
@@ -37,7 +43,7 @@ public class ChatService {
                     return new BaseException(INVALID_CHATROOM);
                 });
 
-        User user = userRepository.findById(chatMessageReqDto.getSenderId()).orElseThrow(() -> {
+        User user = userRepository.findByNum(chatMessageReqDto.getSenderNum()).orElseThrow(() -> {
             log.error(INVALID_USER_NUM.getMessage());
             return  new BaseException(INVALID_USER_NUM);
         });
@@ -49,13 +55,37 @@ public class ChatService {
                 .sender(user)
                 .content(chatMessageReqDto.getContent())
                 .createdAt(LocalDateTime.now())
-                .isNotice(chatMessageReqDto.getIsNotice())
+                .isNotice(Boolean.FALSE)
                 .fileUrl(chatMessageReqDto.getFileUrl())
                 .build();
 
         chatMessageRepository.save(message);
 
         return ChatMessageResDto.from(message);
+    }
 
+    @Transactional
+    public ChatRoomResDto createChatRoom(ChatRoomReqDto chatRoomReqDto) {
+
+        ChatRoom room = ChatRoom.createChatRoom(chatRoomReqDto.getName());
+
+        List<ChatParticipant> participants = new ArrayList<>();
+        for (String num : chatRoomReqDto.getParticipantNum()) {
+            User user = userRepository.findByNum(num).orElseThrow(() -> {
+                log.error(INVALID_USER_NUM.getMessage());
+                return  new BaseException(INVALID_USER_NUM);
+            });
+
+            participants.add(ChatParticipant.builder()
+                    .room(room)
+                    .user(user)
+                    .build());
+        }
+
+        room.insertParticipants(participants);
+
+        chatRoomRepository.save(room);
+
+        return ChatRoomResDto.from(room);
     }
 }

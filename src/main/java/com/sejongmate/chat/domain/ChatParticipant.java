@@ -3,6 +3,7 @@ package com.sejongmate.chat.domain;
 import com.sejongmate.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,9 @@ public class ChatParticipant {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Builder
+    public ChatParticipant(ChatRoom room, User user) {
+        this.room = room;
+        this.user = user;
+    }
 }
