@@ -22,15 +22,18 @@ public class ChatRoom {
     private String name;
     private LocalDateTime createdAt;
 
+    private Integer count;
+
 //    @JsonIgnore
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<ChatParticipant> participants;
 
     @Builder
-    public ChatRoom(String id, String name, LocalDateTime createdAt, List<ChatParticipant> participants) {
+    public ChatRoom(String id, String name, LocalDateTime createdAt, Integer count, List<ChatParticipant> participants) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
+        this.count = count;
         this.participants = participants;
     }
 
@@ -42,6 +45,7 @@ public class ChatRoom {
         chatRoom.id = randomId;
         chatRoom.name = name;
         chatRoom.createdAt = LocalDateTime.now();
+        chatRoom.count = 0;
         chatRoom.participants = new ArrayList<>();
 
         return chatRoom;
@@ -51,6 +55,7 @@ public class ChatRoom {
     public void insertParticipants(List<ChatParticipant> chatParticipants){
         for (ChatParticipant participant : chatParticipants) {
             this.participants.add(participant);
+            this.count += 1;
         }
     }
 }

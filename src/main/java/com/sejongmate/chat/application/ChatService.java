@@ -1,16 +1,11 @@
 package com.sejongmate.chat.application;
 
 import com.sejongmate.chat.domain.*;
-import com.sejongmate.chat.presentation.dto.ChatMessageReqDto;
-import com.sejongmate.chat.presentation.dto.ChatMessageResDto;
-import com.sejongmate.chat.presentation.dto.ChatRoomReqDto;
-import com.sejongmate.chat.presentation.dto.ChatRoomResDto;
+import com.sejongmate.chat.infra.ChatQueryDao;
+import com.sejongmate.chat.presentation.dto.*;
 import com.sejongmate.common.BaseException;
 import com.sejongmate.user.domain.User;
 import com.sejongmate.user.domain.UserRepository;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -33,6 +28,7 @@ public class ChatService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final UserRepository userRepository;
+    private final ChatQueryDao chatQueryDao;
 
     @Transactional
     public ChatMessageResDto sendMessage(ChatMessageReqDto chatMessageReqDto) throws BaseException {
@@ -48,7 +44,6 @@ public class ChatService {
             return  new BaseException(INVALID_USER_NUM);
         });
 
-
         ChatMessage message = ChatMessage.builder()
                 .type(chatMessageReqDto.getType())
                 .room(room)
@@ -58,6 +53,8 @@ public class ChatService {
                 .isNotice(Boolean.FALSE)
                 .fileUrl(chatMessageReqDto.getFileUrl())
                 .build();
+
+
 
         chatMessageRepository.save(message);
 
@@ -87,5 +84,10 @@ public class ChatService {
         chatRoomRepository.save(room);
 
         return ChatRoomResDto.from(room);
+    }
+
+
+    public List<ChatRoomInfoDto> getChatRoomList(Long id) {
+        return chatQueryDao.getChatRoomInfo(id);
     }
 }

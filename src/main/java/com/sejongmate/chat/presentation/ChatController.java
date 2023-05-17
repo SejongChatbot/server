@@ -1,20 +1,16 @@
 package com.sejongmate.chat.presentation;
 
 import com.sejongmate.chat.application.ChatService;
-import com.sejongmate.chat.presentation.dto.ChatMessageReqDto;
-import com.sejongmate.chat.presentation.dto.ChatMessageResDto;
-import com.sejongmate.chat.presentation.dto.ChatRoomReqDto;
-import com.sejongmate.chat.presentation.dto.ChatRoomResDto;
+import com.sejongmate.chat.presentation.dto.*;
 import com.sejongmate.common.BaseException;
 import com.sejongmate.common.BaseResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -52,6 +48,14 @@ public class ChatController {
         } catch(BaseException e){
             return new BaseResponse<>(e.getStatus());
         }
+    }
 
+    @GetMapping("/room/{id}")
+    public BaseResponse<List<ChatRoomInfoDto>> getChatRoomList(@PathVariable("id") Long id){
+        try {
+            return new BaseResponse<>(chatService.getChatRoomList(id));
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
     }
 }
