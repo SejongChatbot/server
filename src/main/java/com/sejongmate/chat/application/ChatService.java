@@ -54,8 +54,6 @@ public class ChatService {
                 .fileUrl(chatMessageReqDto.getFileUrl())
                 .build();
 
-
-
         chatMessageRepository.save(message);
 
         return ChatMessageResDto.from(message);
@@ -89,5 +87,14 @@ public class ChatService {
 
     public List<ChatRoomInfoDto> getChatRoomList(Long id) {
         return chatQueryDao.getChatRoomInfo(id);
+    }
+
+    public List<ChatRoomHistoryDto> getChatRoomHistory(String id){
+        return chatQueryDao.getChatRoomHistory(id);
+    }
+
+    @Transactional
+    public Boolean deleteChatRoomUser(String roomId, Long userId) {
+        return chatQueryDao.deleteChatRoomUser(roomId, userId);
     }
 }

@@ -19,6 +19,9 @@ import java.util.List;
 public class ChatController {
     private final ChatService chatService;
 
+    /**
+     * 채팅 생성
+     */
     @PostMapping("/message")
     public BaseResponse<ChatMessageResDto> sendMessage(@Valid @RequestBody ChatMessageReqDto chatMessageReqDto, BindingResult br) {
 
@@ -35,6 +38,9 @@ public class ChatController {
         }
     }
 
+    /**
+     * 채팅방 생성
+     */
     @PostMapping("/room")
     public BaseResponse<ChatRoomResDto> createChatRoom(@Valid @RequestBody ChatRoomReqDto chatRoomReqDto, BindingResult br){
         if (br.hasErrors()){
@@ -50,12 +56,40 @@ public class ChatController {
         }
     }
 
-    @GetMapping("/room/{id}")
-    public BaseResponse<List<ChatRoomInfoDto>> getChatRoomList(@PathVariable("id") Long id){
+    /**
+     * 유저의 채팅방 목록 조회
+     */
+    @GetMapping("/room/list/{user_id}")
+    public BaseResponse<List<ChatRoomInfoDto>> getChatRoomList(@PathVariable("user_id") Long id){
         try {
             return new BaseResponse<>(chatService.getChatRoomList(id));
         } catch(BaseException e){
             return new BaseResponse<>(e.getStatus());
         }
     }
+
+    /**
+     * 채팅방 채팅 목록 조회
+     */
+    @GetMapping("/room/{room_id}")
+    public BaseResponse<List<ChatRoomHistoryDto>> getChatRoomHistory(@PathVariable("room_id") String id){
+        try {
+            return new BaseResponse<>(chatService.getChatRoomHistory(id));
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    /**
+     * 채팅방 나가기
+     */
+    @DeleteMapping("/room/{room_id}/{user_id}")
+    public BaseResponse<Boolean> deleteChatRoomUser(@PathVariable("room_id") String roomId, @PathVariable("user_id") Long userId){
+        try {
+            return new BaseResponse<>(chatService.deleteChatRoomUser(roomId, userId));
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
 }
