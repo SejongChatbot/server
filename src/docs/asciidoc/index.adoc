@@ -24,3 +24,33 @@ operation::user-login[snippets='http-request,http-response,response-fields']
 [[User-단일-조회]]
 === User 단일 조회
 operation::user-get[snippets='http-request,path-parameters,http-response,response-fields']
+
+
+
+[[Chat-API]]
+== Chat API
+
+
+[[Chat-채팅방-생성]]
+=== 채팅방 생성
+operation::chat-room-post[snippets='http-request,http-response,response-fields']
+
+
+[[Chat-채팅-생성]]
+=== 채팅 생성 (채팅 보내기)
+operation::chat-message-post[snippets='http-request,http-response,response-fields']
+
+
+[[Chat-채팅방-목록-조회]]
+=== 채팅방 목록 조회
+operation::chat-room-list-get[snippets='http-request,path-parameters,http-response,response-fields']
+
+
+[[Chat-채팅-목록-조회]]
+=== 채팅 목록 조회
+operation::chat-room-message-get[snippets='http-request,path-parameters,http-response,response-fields']
+
+
+[[Chat-채팅방-나가기]]
+=== 채팅방 나가기
+operation::chat-room-user-delete[snippets='http-request,path-parameters,http-response,response-fields']
