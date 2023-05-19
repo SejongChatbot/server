@@ -51,7 +51,6 @@ public class ChatService {
                 .content(chatMessageReqDto.getContent())
                 .createdAt(LocalDateTime.now())
                 .isNotice(Boolean.FALSE)
-                .fileUrl(chatMessageReqDto.getFileUrl())
                 .build();
 
         chatMessageRepository.save(message);

@@ -19,14 +19,12 @@ public class ChatMessageReqDto {
     private String senderNum;
     @NotNull(message = "내용을 입력하세요.")
     private String content;
-    private String fileUrl;
 
     @Builder
-    public ChatMessageReqDto(MessageType type, String roomId, String senderNum, String content, String fileUrl) {
+    public ChatMessageReqDto(MessageType type, String roomId, String senderNum, String content) {
         this.type = type;
         this.roomId = roomId;
         this.senderNum = senderNum;
         this.content = content;
-        this.fileUrl = fileUrl;
     }
 }
