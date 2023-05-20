@@ -38,7 +38,7 @@ public class ChatQueryDao {
 
     public List<ChatRoomHistoryDto> getChatRoomHistory(String id) {
         return query
-                .select(new QChatRoomHistoryDto(user.name, user.profileUrl, chatMessage.content, chatMessage.createdAt))
+                .select(new QChatRoomHistoryDto(chatMessage.type, user.name, user.profileUrl, chatMessage.content, chatMessage.createdAt))
                 .from(chatMessage)
                 .where(chatMessage.room.id.eq(id))
                 .leftJoin(user).on(chatMessage.sender.id.eq(user.id))

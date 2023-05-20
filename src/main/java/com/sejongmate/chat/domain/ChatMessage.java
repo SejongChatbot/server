@@ -30,16 +30,14 @@ public class ChatMessage {
     private String content;
     private LocalDateTime createdAt;
     private Boolean isNotice;
-    private String fileUrl;
 
     @Builder
-    public ChatMessage(MessageType type, ChatRoom room, User sender, String content, LocalDateTime createdAt, Boolean isNotice, String fileUrl) {
+    public ChatMessage(MessageType type, ChatRoom room, User sender, String content, LocalDateTime createdAt, Boolean isNotice) {
         this.type = type;
         this.room = room;
         this.sender = sender;
         this.content = content;
         this.createdAt = createdAt;
         this.isNotice = isNotice;
-        this.fileUrl = fileUrl;
     }
 }

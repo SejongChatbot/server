@@ -13,8 +13,8 @@ public class QChatRoomHistoryDto extends ConstructorExpression<ChatRoomHistoryDt
 
     private static final long serialVersionUID = -947360905L;
 
-    public QChatRoomHistoryDto(com.querydsl.core.types.Expression<String> name, com.querydsl.core.types.Expression<String> profileUrl, com.querydsl.core.types.Expression<String> content, com.querydsl.core.types.Expression<java.time.LocalDateTime> createdAt) {
-        super(ChatRoomHistoryDto.class, new Class<?>[]{String.class, String.class, String.class, java.time.LocalDateTime.class}, name, profileUrl, content, createdAt);
+    public QChatRoomHistoryDto(com.querydsl.core.types.Expression<com.sejongmate.chat.domain.MessageType> type, com.querydsl.core.types.Expression<String> name, com.querydsl.core.types.Expression<String> profileUrl, com.querydsl.core.types.Expression<String> content, com.querydsl.core.types.Expression<java.time.LocalDateTime> createdAt) {
+        super(ChatRoomHistoryDto.class, new Class<?>[]{com.sejongmate.chat.domain.MessageType.class, String.class, String.class, String.class, java.time.LocalDateTime.class}, type, name, profileUrl, content, createdAt);
     }
 
 }
