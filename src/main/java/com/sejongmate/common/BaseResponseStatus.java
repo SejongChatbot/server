@@ -28,8 +28,8 @@ public enum BaseResponseStatus {
     POST_USERS_EMPTY_NUM(false, 2104, "학번을 입력해주세요."),
     POST_USERS_EXISTS_NUM(false,2105,"중복된 학번입니다."),
     INVALID_USER_NUM(false, 2106, "학번을 확인해주세요"),
-    INVALID_USER_PW(false, 2106, "비밀번호를 확인해주세요."),
-
+    INVALID_USER_PW(false, 2107, "비밀번호를 확인해주세요."),
+    INVALID_USER_ID(false, 2108, "유저 ID를 확인해주세요."),
     INVALID_CHATROOM(false, 2201, "채팅룸 ID를 확인해주세요."),
 
     /**
