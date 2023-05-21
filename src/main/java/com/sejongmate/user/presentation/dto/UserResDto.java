@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserResDto {
+    Long id;
     String num;
     String name;
     String email;
@@ -19,6 +20,7 @@ public class UserResDto {
 
     public static UserResDto from(User user){
         return UserResDto.builder()
+                .id(user.getId())
                 .num(user.getNum())
                 .name(user.getName())
                 .email(user.getEmail())
