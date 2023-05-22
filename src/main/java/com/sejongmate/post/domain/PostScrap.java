@@ -3,6 +3,7 @@ package com.sejongmate.post.domain;
 import com.sejongmate.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,4 +22,10 @@ public class PostScrap {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @Builder
+    public PostScrap(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
 }

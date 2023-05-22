@@ -5,10 +5,7 @@ import com.sejongmate.chat.presentation.dto.ChatMessageResDto;
 import com.sejongmate.common.BaseException;
 import com.sejongmate.common.BaseResponse;
 import com.sejongmate.post.application.PostService;
-import com.sejongmate.post.presentation.dto.CommentCreateReqDto;
-import com.sejongmate.post.presentation.dto.CommentCreateResDto;
-import com.sejongmate.post.presentation.dto.PostCreateReqDto;
-import com.sejongmate.post.presentation.dto.PostCreateResDto;
+import com.sejongmate.post.presentation.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -50,6 +47,21 @@ public class PostController {
 
         try {
             return new BaseResponse<>(postService.createComment(commentCreateReqDto));
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    @PostMapping("/scrap")
+    public BaseResponse<ScrapCreateResDto> createPost(@Valid @RequestBody ScrapCreateReqDto scrapCreateReqDto, BindingResult br) {
+        if (br.hasErrors()){
+            String errorName = br.getAllErrors().get(0).getDefaultMessage();
+            log.error(errorName);
+            return new BaseResponse<>(errorName);
+        }
+
+        try {
+            return new BaseResponse<>(postService.createScrap(scrapCreateReqDto));
         } catch(BaseException e){
             return new BaseResponse<>(e.getStatus());
         }
