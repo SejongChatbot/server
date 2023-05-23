@@ -1,19 +1,21 @@
 package com.sejongmate.post.presentation;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.sejongmate.chat.presentation.dto.ChatMessageReqDto;
 import com.sejongmate.chat.presentation.dto.ChatMessageResDto;
 import com.sejongmate.common.BaseException;
 import com.sejongmate.common.BaseResponse;
 import com.sejongmate.post.application.PostService;
+import com.sejongmate.post.domain.Category;
+import com.sejongmate.post.domain.MeetingType;
 import com.sejongmate.post.presentation.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
     private final PostService postService;
 
+    /**
+     * 글 생성
+     * */
     @PostMapping
     public BaseResponse<PostCreateResDto> createPost(@Valid @RequestBody PostCreateReqDto postCreateReqDto, BindingResult br) {
         if (br.hasErrors()){
@@ -37,6 +42,9 @@ public class PostController {
         }
     }
 
+    /**
+     * 댓글 생성
+     * */
     @PostMapping("/comment")
     public BaseResponse<CommentCreateResDto> createPost(@Valid @RequestBody CommentCreateReqDto commentCreateReqDto, BindingResult br) {
         if (br.hasErrors()){
@@ -52,6 +60,9 @@ public class PostController {
         }
     }
 
+    /**
+     * 스크랩 하기
+     * */
     @PostMapping("/scrap")
     public BaseResponse<ScrapCreateResDto> createPost(@Valid @RequestBody ScrapCreateReqDto scrapCreateReqDto, BindingResult br) {
         if (br.hasErrors()){
@@ -66,4 +77,30 @@ public class PostController {
             return new BaseResponse<>(e.getStatus());
         }
     }
+
+    /**
+     * 전체 글 리스트 조회
+     * */
+    @GetMapping("/list")
+    public BaseResponse<List<PostListDto>> getPostList(){
+        try {
+            return new BaseResponse<>(postService.getPostList());
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    /**
+     * 카테고리 별 글 리스트 조회
+     * */
+    @GetMapping("/list/{category}")
+    public BaseResponse<List<PostListDto>> getPostListByCategory(@PathVariable("category") Category category){
+        try {
+            return new BaseResponse<>(postService.getPostListByCategory(category));
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+
 }

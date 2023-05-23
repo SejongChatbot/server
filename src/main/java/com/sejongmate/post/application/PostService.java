@@ -2,6 +2,7 @@ package com.sejongmate.post.application;
 
 import com.sejongmate.common.BaseException;
 import com.sejongmate.post.domain.*;
+import com.sejongmate.post.infra.PostQueryDao;
 import com.sejongmate.post.presentation.dto.*;
 import com.sejongmate.user.domain.User;
 import com.sejongmate.user.domain.UserRepository;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.sejongmate.common.BaseResponseStatus.INVALID_POST_ID;
 import static com.sejongmate.common.BaseResponseStatus.INVALID_USER_ID;
@@ -22,6 +25,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final PostScrapRepository postScrapRepository;
+    private final PostQueryDao postQueryDao;
 
     @Transactional
     public PostCreateResDto createPost(PostCreateReqDto postCreateReqDto) {
@@ -83,5 +87,13 @@ public class PostService {
                     log.error(INVALID_POST_ID.getMessage());
                     return new BaseException(INVALID_POST_ID);
                 });
+    }
+
+    public List<PostListDto> getPostList() {
+        return postQueryDao.getPostList();
+    }
+
+    public List<PostListDto> getPostListByCategory(Category category) {
+        return postQueryDao.getPostListByCategory(category);
     }
 }
