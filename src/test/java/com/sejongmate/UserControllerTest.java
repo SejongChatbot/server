@@ -69,6 +69,7 @@ public class UserControllerTest {
                                     fieldWithPath("isSuccess").description("Request 성공 여부"),
                                     fieldWithPath("code").description("응답 코드"),
                                     fieldWithPath("message").description("응답 메시지"),
+                                    fieldWithPath("result.id").description("ID"),
                                     fieldWithPath("result.num").description("학번"),
                                     fieldWithPath("result.name").description("이름"),
                                     fieldWithPath("result.email").description("이메일"),
