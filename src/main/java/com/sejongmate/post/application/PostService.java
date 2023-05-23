@@ -46,6 +46,7 @@ public class PostService {
         return PostCreateResDto.from(post);
     }
 
+    @Transactional
     public CommentCreateResDto createComment(CommentCreateReqDto commentCreateReqDto) {
         User user = findUserById(commentCreateReqDto.getUserId());
         Post post = findPostById(commentCreateReqDto.getPostId());
@@ -60,6 +61,7 @@ public class PostService {
         return CommentCreateResDto.from(comment);
     }
 
+    @Transactional
     public ScrapCreateResDto createScrap(ScrapCreateReqDto scrapCreateReqDto) {
         User user = findUserById(scrapCreateReqDto.getUserId());
         Post post = findPostById(scrapCreateReqDto.getPostId());
@@ -95,5 +97,17 @@ public class PostService {
 
     public List<PostListDto> getPostListByCategory(Category category) {
         return postQueryDao.getPostListByCategory(category);
+    }
+
+    public List<PostListDto> getPostListByCategoryAndType(Category category, MeetingType type) {
+        return postQueryDao.getPostListByCategoryAndType(category, type);
+    }
+
+    public PostResDto getPost(Long postId, Long userId){
+        return PostResDto.builder()
+                .postInfoDto(postQueryDao.getPostInfo(postId))
+                .commentInfoDtos(postQueryDao.getCommentInfo(postId))
+                .isScraped(postQueryDao.isScraped(postId, userId))
+                .build();
     }
 }

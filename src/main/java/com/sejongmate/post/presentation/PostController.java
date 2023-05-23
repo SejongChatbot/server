@@ -102,5 +102,27 @@ public class PostController {
         }
     }
 
+    /**
+     * 카테고리 & 대면 여부 별 글 리스트 조회
+     * */
+    @GetMapping("/list/{category}/{type}")
+    public BaseResponse<List<PostListDto>> getPostListByCategoryAndType(@PathVariable("category") Category category, @PathVariable("type") MeetingType type){
+        try {
+            return new BaseResponse<>(postService.getPostListByCategoryAndType(category, type));
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
 
+    /**
+     * 글 상세 조회
+     * */
+    @GetMapping("/{post_id}/user/{user_id}")
+    public BaseResponse<PostResDto> getPost(@PathVariable("post_id") Long postId, @PathVariable("user_id") Long userId){
+        try {
+            return new BaseResponse<>(postService.getPost(postId, userId));
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
 }
