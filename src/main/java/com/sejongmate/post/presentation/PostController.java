@@ -125,4 +125,28 @@ public class PostController {
             return new BaseResponse<>(e.getStatus());
         }
     }
+
+    /**
+     * 스크랩 글 조회
+     * */
+    @GetMapping("/scrap/{user_id}")
+    public BaseResponse<List<PostListDto>> getScrapedPost(@PathVariable("user_id") Long userId){
+        try {
+            return new BaseResponse<>(postService.getScrapedPost(userId));
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    /**
+     * 스크랩 삭제
+     * */
+    @DeleteMapping("/scrap/{post_id}/user/{user_id}")
+    public BaseResponse<Boolean> deleteScrap(@PathVariable("user_id") Long userId, @PathVariable("post_id") Long postId){
+        try {
+            return new BaseResponse<>(postService.deleteScrap(userId, postId));
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
 }

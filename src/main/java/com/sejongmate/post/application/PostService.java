@@ -110,4 +110,13 @@ public class PostService {
                 .isScraped(postQueryDao.isScraped(postId, userId))
                 .build();
     }
+
+    public List<PostListDto> getScrapedPost(Long userId){
+        return postQueryDao.getScrapedPost(userId);
+    }
+
+    @Transactional
+    public Boolean deleteScrap(Long userId, Long postId) {
+        return postQueryDao.deleteScrap(userId, postId);
+    }
 }
