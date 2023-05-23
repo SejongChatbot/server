@@ -7,9 +7,11 @@ import com.sejongmate.post.presentation.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.sejongmate.chat.domain.QChatParticipant.chatParticipant;
 import static com.sejongmate.common.BaseResponseStatus.INVALID_POST_ID;
 import static com.sejongmate.post.domain.QComment.comment;
 import static com.sejongmate.post.domain.QPost.post;
@@ -75,5 +77,21 @@ public class PostQueryDao {
 
         if (scraped.size() == 0) return false;
         else return true;
+    }
+
+    public List<PostListDto> getScrapedPost(Long userId){
+        return query
+                .select(new QPostListDto(post.id, post.type, post.title, post.endAt))
+                .from(postScrap)
+                .where(postScrap.user.id.eq(userId))
+                .leftJoin(post).on(post.id.eq(postScrap.post.id))
+                .fetch();
+    }
+
+    public Boolean deleteScrap(Long postId, Long userId){
+        long result = query.delete(postScrap)
+                .where(postScrap.post.id.eq(postId), postScrap.user.id.eq(userId))
+                .execute();
+        return result == 1? true : false;
     }
 }
