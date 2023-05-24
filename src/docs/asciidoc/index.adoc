@@ -54,3 +54,48 @@ operation::chat-room-message-get[snippets='http-request,path-parameters,http-res
 [[Chat-채팅방-나가기]]
 === 채팅방 나가기
 operation::chat-room-user-delete[snippets='http-request,path-parameters,http-response,response-fields']
+
+
+[[Post-API]]
+== Post API
+
+
+[[Post-글-생성]]
+=== 글 생성
+operation::create-post[snippets='http-request,http-response,response-fields']
+
+
+[[Post-댓글-생성]]
+=== 댓글 생성
+operation::create-comment[snippets='http-request,http-response,response-fields']
+
+
+[[Post-스크랩-생성]]
+=== 스크랩 생성
+operation::create-scrap[snippets='http-request,http-response,response-fields']
+
+[[Post-전체-글-목록-조회]]
+=== 전체 글 목록 조회
+operation::get-post-list[snippets='http-request,http-response,response-fields']
+
+[[Post-카테고리-별-글-목록-조회]]
+=== 카테고리 별 글 목록 조회
+operation::get-post-list-by-category[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Post-카테고리-및-대면여부-별-글-목록-조회]]
+=== 카테고리 및 대면여부 별 글 목록 조회
+operation::get-post-list-by-category-and-type[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Post-단일-글-상세-조회]]
+=== 단일 글 상세 조회
+operation::get-post[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Post-스크랩-글-목록-조회]]
+=== 스크랩 글 목록 조회
+operation::get-scraped-post[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Post-스크랩-삭제]]
+=== 스크랩 삭제
+operation::delete-scrap[snippets='http-request,path-parameters,http-response,response-fields']
+
+
