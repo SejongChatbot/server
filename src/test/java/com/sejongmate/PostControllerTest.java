@@ -249,7 +249,7 @@ class PostControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
                 .andDo(
-                        document("get-post-list-by-category",
+                        document("get-post-list-by-category-and-type",
                                 pathParameters(
                                         parameterWithName("category").description("스터디 카테고리 [ ENUN : LANGUAGE, JOB, OFFICIAL, PROGRAMMING, ETC ]"),
                                         parameterWithName("type").description("대면 여부 [ ENUM : ON, OFF, UNDEFINED ]")
@@ -420,6 +420,11 @@ class PostControllerTest {
 
         postService.createPost(new PostCreateReqDto(userId, Category.JOB, MeetingType.OFF,
                 "test title 3", "test content 3", LocalDateTime.of(2023, 05, 10, 00, 00),
+                LocalDateTime.of(2023, 05, 20, 00, 00), 6
+        )).getId();
+
+        postService.createPost(new PostCreateReqDto(userId, Category.JOB, MeetingType.ON,
+                "test title 4", "test content 4", LocalDateTime.of(2023, 05, 10, 00, 00),
                 LocalDateTime.of(2023, 05, 20, 00, 00), 6
         )).getId();
 
