@@ -1,8 +1,5 @@
 package com.sejongmate.post.presentation;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import com.sejongmate.chat.presentation.dto.ChatMessageReqDto;
-import com.sejongmate.chat.presentation.dto.ChatMessageResDto;
 import com.sejongmate.common.BaseException;
 import com.sejongmate.common.BaseResponse;
 import com.sejongmate.post.application.PostService;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sejongmate.user.domain.Role;
 import com.sejongmate.user.domain.User;
 import com.sejongmate.user.domain.UserRepository;
+import com.sejongmate.user.presentation.dto.UserCreateReqDto;
 import com.sejongmate.user.presentation.dto.UserLoginReqDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,7 @@ public class UserControllerTest {
     @Test
     @Transactional
     public void user_signup() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserLoginReqDto("19011494", pw));
+        String content = objectMapper.writeValueAsString(new UserCreateReqDto("19011494", pw, 0));
         mockMvc.perform(
                 RestDocumentationRequestBuilders
                         .post("/api/users/signup")
@@ -103,7 +104,8 @@ public class UserControllerTest {
                         document("user-signup",
                                 requestFields(
                                         fieldWithPath("num").description("학번"),
-                                        fieldWithPath("password").description("비밀번호")
+                                        fieldWithPath("password").description("비밀번호"),
+                                        fieldWithPath("role").description("교수/학생 [학생 : 0, 교수 : 1]")
                                 ),
                                 responseFields(
                                         fieldWithPath("isSuccess").description("Request 성공 여부"),
