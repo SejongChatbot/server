@@ -61,6 +61,8 @@ public class WebDriverUtil {
             driver.manage().timeouts().implicitlyWait(1000, TimeUnit.MILLISECONDS);
 
             driver.findElement(By.id("id")).click();
+            driver.manage().timeouts().implicitlyWait(1000, TimeUnit.MILLISECONDS);
+            driver.findElement(By.id("id")).click();
             driver.findElement(By.id("id")).sendKeys(num);
             driver.findElement(By.id("password")).sendKeys(password);
             driver.findElement(By.xpath("//*[@id=\"loginBtn\"]")).click();
