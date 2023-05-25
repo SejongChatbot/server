@@ -192,6 +192,7 @@ class PostControllerTest {
                                         fieldWithPath("message").description("응답 메시지"),
                                         fieldWithPath("result.[].postId").description("글 ID"),
                                         fieldWithPath("result.[].meetingType").description("대면 여부 [ ENUM : ON, OFF, UNDEFINED ]"),
+                                        fieldWithPath("result.[].category").description("스터디 카테고리"),
                                         fieldWithPath("result.[].title").description("글 제목"),
                                         fieldWithPath("result.[].endAt").description("모집 마감일")
                                 )
@@ -225,6 +226,7 @@ class PostControllerTest {
                                         fieldWithPath("message").description("응답 메시지"),
                                         fieldWithPath("result.[].postId").description("글 ID"),
                                         fieldWithPath("result.[].meetingType").description("대면 여부 [ ENUM : ON, OFF, UNDEFINED ]"),
+                                        fieldWithPath("result.[].category").description("스터디 카테고리"),
                                         fieldWithPath("result.[].title").description("글 제목"),
                                         fieldWithPath("result.[].endAt").description("모집 마감일")
                                 )
@@ -260,6 +262,7 @@ class PostControllerTest {
                                         fieldWithPath("message").description("응답 메시지"),
                                         fieldWithPath("result.[].postId").description("글 ID"),
                                         fieldWithPath("result.[].meetingType").description("대면 여부 [ ENUM : ON, OFF, UNDEFINED ]"),
+                                        fieldWithPath("result.[].category").description("스터디 카테고리"),
                                         fieldWithPath("result.[].title").description("글 제목"),
                                         fieldWithPath("result.[].endAt").description("모집 마감일")
                                 )
@@ -331,6 +334,7 @@ class PostControllerTest {
                                         fieldWithPath("message").description("응답 메시지"),
                                         fieldWithPath("result.[].postId").description("글 ID"),
                                         fieldWithPath("result.[].meetingType").description("대면 여부 [ ENUM : ON, OFF, UNDEFINED ]"),
+                                        fieldWithPath("result.[].category").description("스터디 카테고리"),
                                         fieldWithPath("result.[].title").description("글 제목"),
                                         fieldWithPath("result.[].endAt").description("모집 마감일")
                                 )
