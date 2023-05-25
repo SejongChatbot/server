@@ -13,8 +13,8 @@ public class QPostListDto extends ConstructorExpression<PostListDto> {
 
     private static final long serialVersionUID = 1309853536L;
 
-    public QPostListDto(com.querydsl.core.types.Expression<Long> postId, com.querydsl.core.types.Expression<com.sejongmate.post.domain.MeetingType> meetingType, com.querydsl.core.types.Expression<String> title, com.querydsl.core.types.Expression<java.time.LocalDateTime> endAt) {
-        super(PostListDto.class, new Class<?>[]{long.class, com.sejongmate.post.domain.MeetingType.class, String.class, java.time.LocalDateTime.class}, postId, meetingType, title, endAt);
+    public QPostListDto(com.querydsl.core.types.Expression<Long> postId, com.querydsl.core.types.Expression<com.sejongmate.post.domain.MeetingType> meetingType, com.querydsl.core.types.Expression<com.sejongmate.post.domain.Category> category, com.querydsl.core.types.Expression<String> title, com.querydsl.core.types.Expression<java.time.LocalDateTime> endAt) {
+        super(PostListDto.class, new Class<?>[]{long.class, com.sejongmate.post.domain.MeetingType.class, com.sejongmate.post.domain.Category.class, String.class, java.time.LocalDateTime.class}, postId, meetingType, category, title, endAt);
     }
 
 }

@@ -5,13 +5,10 @@ import com.sejongmate.common.BaseException;
 import com.sejongmate.post.domain.*;
 import com.sejongmate.post.presentation.dto.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.sejongmate.chat.domain.QChatParticipant.chatParticipant;
 import static com.sejongmate.common.BaseResponseStatus.INVALID_POST_ID;
 import static com.sejongmate.post.domain.QComment.comment;
 import static com.sejongmate.post.domain.QPost.post;
@@ -24,14 +21,14 @@ public class PostQueryDao {
 
     public List<PostListDto> getPostList() {
         return query
-                .select(new QPostListDto(post.id, post.type, post.title, post.endAt))
+                .select(new QPostListDto(post.id, post.type, post.category, post.title, post.endAt))
                 .from(post)
                 .fetch();
     }
 
     public List<PostListDto> getPostListByCategory(Category category) {
         return query
-                .select(new QPostListDto(post.id, post.type, post.title, post.endAt))
+                .select(new QPostListDto(post.id, post.type, post.category, post.title, post.endAt))
                 .from(post)
                 .where(post.category.eq(category))
                 .fetch();
@@ -39,7 +36,7 @@ public class PostQueryDao {
 
     public List<PostListDto> getPostListByCategoryAndType(Category category, MeetingType type) {
         return query
-                .select(new QPostListDto(post.id, post.type, post.title, post.endAt))
+                .select(new QPostListDto(post.id, post.type, post.category, post.title, post.endAt))
                 .from(post)
                 .where(post.category.eq(category), post.type.eq(type))
                 .fetch();
@@ -81,7 +78,7 @@ public class PostQueryDao {
 
     public List<PostListDto> getScrapedPost(Long userId){
         return query
-                .select(new QPostListDto(post.id, post.type, post.title, post.endAt))
+                .select(new QPostListDto(post.id, post.type, post.category, post.title, post.endAt))
                 .from(postScrap)
                 .where(postScrap.user.id.eq(userId))
                 .leftJoin(post).on(post.id.eq(postScrap.post.id))
